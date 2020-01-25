@@ -1,0 +1,16 @@
+<div class="card text-center"(click)="create()">
+    <img src="../../../assets/icons8-plus-512.png" alt="Plus" style="width:100%">
+    <div class="container">
+      <h4><b>Add Doctor</b></h4> 
+      <p>Click To Add</p> 
+    </div>
+  </div>
+ 
+<div class="card text-center" *ngFor="let doctor of doctors" (click)="open(doctor)">
+    <img src="https://www.w3schools.com/howto/img_avatar.png" alt="Avatar" style="width:100%">
+    <div class="container">
+      <h4><b>{{doctor.username}}</b></h4> 
+      <p>{{doctor.specialist}}</p> 
+    </div>
+  </div>
+ 

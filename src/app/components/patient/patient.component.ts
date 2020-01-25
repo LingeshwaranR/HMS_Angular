@@ -1,0 +1,16 @@
+import { Component, OnInit } from '@angular/core';
+
+@Component({
+  selector: 'app-patient',
+  templateUrl: './patient.component.html',
+  styleUrls: ['./patient.component.css']
+})
+export class PatientComponent implements OnInit {
+  patients=["Ms.Jane Doe","priya","sneya","kajal","trisha","sam"]
+
+  constructor() { }
+
+  ngOnInit() {
+  }
+
+}

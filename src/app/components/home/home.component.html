@@ -1,0 +1,29 @@
+<app-header></app-header>
+<div class="container" style="margin-top:1%;">
+  <div class="row">
+    <div class=" col-md-6 text-center">
+      <button
+        type="button"
+        class="btn btn-primary btn-lg active"
+        role="button"
+        aria-pressed="true"
+        (click)="displayDoctor()"
+      >
+        Doctors
+      </button>
+    </div>
+    <div class="col-md-6 text-center">
+      <button
+        type="button"
+        class="btn-lg btn-success"
+        (click)="displayPatient()"
+      >
+        Patients
+      </button>
+    </div>
+    <div class="docPat">
+    <app-doctor *ngIf="doctor"></app-doctor>
+    <app-patient *ngIf="patient"></app-patient>
+</div>
+  </div>
+</div>
