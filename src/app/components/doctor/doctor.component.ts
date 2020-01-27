@@ -5,6 +5,9 @@ import{Doctor} from '../../model/doctor';
 import {CustomRequest} from '../../model/customRequest'
 import { DoctorModalComponent } from '../doctor-modal/doctor-modal.component';
 import { DoctorUpdateModalComponent } from '../doctor-update-modal/doctor-update-modal.component';
+import { NavigationEnd, Router } from '@angular/router';
+import {Subject} from 'rxjs';
+import {debounceTime} from 'rxjs/operators';
 
 
 @Component({
@@ -18,9 +21,9 @@ import { DoctorUpdateModalComponent } from '../doctor-update-modal/doctor-update
     </div>
     <div class="modal-body">
       <ul>
-      <li>Name  : {{name}}</li>
-      <li>Email : {{email}}</li>
-      <li>Specialist : {{specialist}}</li>
+      <li>Name  : {{doctor.username}}</li>
+      <li>Email : {{doctor.email}}</li>
+      <li>Specialist : {{doctor.specialist}}</li>
       </ul>
     </div>
     <div class="modal-footer">
@@ -32,12 +35,9 @@ import { DoctorUpdateModalComponent } from '../doctor-update-modal/doctor-update
   `
 })
 export class NgbdModalContent {
-  @Input() name;
-  @Input() email;
-  @Input() specialist;
-  @Input () id;
+
+  @Input() doctor:Doctor;
   private request:CustomRequest<Number>;
-  private doctor:Doctor = new Doctor(0,null,null,null,0,null,null);
     
 
 
@@ -45,18 +45,24 @@ export class NgbdModalContent {
   update(){
     const modalRef = this.modalService.open(DoctorUpdateModalComponent);
 
+    modalRef.componentInstance.doctor=this.doctor;
+    modalRef.result.then((result) => {
+      this.activeModal.close("Updated");
+      });
+
 
   }
   delete(){
-    this.doctor.pkUserId=this.id;
+
     this.crudService.deleteDoctor(this.doctor).subscribe((data)=>{
       this.request = data;
       console.log(this.request);
+      this.activeModal.close("Deleted");
+
     })
 
   }
 }
-
 
 @Component({
   selector: 'app-doctor',
@@ -68,31 +74,78 @@ export class DoctorComponent implements OnInit {
 private doctors:Doctor[];
 private request:CustomRequest<Doctor>;
 private isPageLoaded = false;
+mySubscription: any;
+private alertStatus:Boolean=false;
+private _success = new Subject<string>();
+successMessage: string;
 
-constructor(private modalService: NgbModal,private crudService : CrudService) {}
+
+constructor(private modalService: NgbModal,private crudService : CrudService,public router:Router) {}
 
 open(doctor:Doctor) {
   const modalRef = this.modalService.open(NgbdModalContent);
+  
+    modalRef.componentInstance.doctor=doctor;
+    modalRef.result.then((result) => {
+      this.changeSuccessMessage(result);
+      this.getAllDoctors();
+  
+      });
 
-    modalRef.componentInstance.name = doctor.username ;
-    modalRef.componentInstance.email=doctor.email;
-    modalRef.componentInstance.specialist=doctor.specialist;
-    modalRef.componentInstance.id=doctor.pkUserId;
+    
+this.router.routeReuseStrategy.shouldReuseRoute = function () {
+  return false;
+};
+this.mySubscription = this.router.events.subscribe((event) => {
+  if (event instanceof NavigationEnd) {
+    // Trick the Router into believing it's last link wasn't previously loaded
+    this.router.navigated = false;
+  }
+});
   
 }
+
 create(){
-  this.modalService.open(DoctorModalComponent);
+  
+  const modalRef = this.modalService.open(DoctorModalComponent);
+
+  modalRef.result.then((result) => {
+    if (result) {
+    console.log(result);
+    }
+    this.changeSuccessMessage("Added");
+
+    this.getAllDoctors();
+    });
 }
 
-
-
-ngOnInit() {
+getAllDoctors = () =>{
   this.crudService.getAllDoctors().subscribe((data)=>{
     this.request = data;
     this.doctors=this.request.object;
     console.log(this.request);
     this.isPageLoaded = true;
   })
+}
+
+public changeSuccessMessage(message:string) {
+  this._success.next("Doctor Successfully "+ message);
+}
+
+ngOnInit() {
+  this.getAllDoctors();
+  setTimeout(() => this.alertStatus = true, 20000);
+
+  this._success.subscribe((message) => this.successMessage = message);
+  this._success.pipe(
+    debounceTime(5000)
+  ).subscribe(() => this.successMessage = null);
+}
+
+ngOnDestroy() {
+  if (this.mySubscription) {
+    this.mySubscription.unsubscribe();
+  }
 }
 
 }

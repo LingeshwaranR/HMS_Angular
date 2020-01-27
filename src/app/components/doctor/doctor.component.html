@@ -1,3 +1,6 @@
+<ngb-alert *ngIf="alerStatus" type="success" (close)="successMessage = null">{{ successMessage }}</ngb-alert>
+<ngb-alert *ngIf="successMessage" type="success" (close)="successMessage = null">{{ successMessage }}</ngb-alert>
+<br>
 <div class="card text-center"(click)="create()">
     <img src="../../../assets/icons8-plus-512.png" alt="Plus" style="width:100%">
     <div class="container">
@@ -13,4 +16,6 @@
       <p>{{doctor.specialist}}</p> 
     </div>
   </div>
+
+
  

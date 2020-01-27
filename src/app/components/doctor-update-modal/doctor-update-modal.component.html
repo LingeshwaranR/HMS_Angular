@@ -9,13 +9,13 @@
     <input type="number" name="Id" [(ngModel)]="doctor.pkUserId" required class="form-control">
     <br>
     Name:
-    <input type="text" name="name" [(ngModel)]="doctor.username" required class="form-control">
+    <input type="text" name="name"  [(ngModel)]="doctor.username" required class="form-control">
     <br>
     Email:
-    <input type="text" name="email" [(ngModel)]="doctor.email" required class="form-control">
+    <input type="text" name="email"  [(ngModel)]="doctor.email" required class="form-control">
     <br>
      Password:
-    <input type="password" name="password" [(ngModel)]="doctor.password" required class="form-control">
+    <input type="password" name="password"  [(ngModel)]="doctor.password" required class="form-control">
     <br>
      specialist:
     <input type="text" name="specialist" [(ngModel)]="doctor.specialist" required class="form-control">
@@ -24,4 +24,7 @@
   <div class="modal-footer">
     <button type="button" class="btn btn-outline-primary" (click)="update(doctor)">Update</button>
  <button type="button" class="btn btn-outline-dark" (click)="activeModal.close('Close click')">Close</button>
+ <div *ngIf="updateStatus" class="alert alert-success alert-dismissible fade show" role="alert">Update Success!<button type="button" (click)="updateStatus=false;"class="close" data-dismiss="alert" aria-label="Close">
+  <span aria-hidden="true">&times;</span>
+</button></div>
   </div>
