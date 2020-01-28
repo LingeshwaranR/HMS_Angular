@@ -13,19 +13,27 @@ import {debounceTime} from 'rxjs/operators';
 @Component({
   selector: 'ngbd-modal-content',
   template: `
-    <div class="modal-header">
-      <h4 class="modal-title"style={text-align:center}>Doctor Details</h4>
-      <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-    <div class="modal-body">
-      <ul>
-      <li>Name  : {{doctor.username}}</li>
-      <li>Email : {{doctor.email}}</li>
-      <li>Specialist : {{doctor.specialist}}</li>
-      </ul>
-    </div>
+  <div class="modal-header">
+  <h4 class="modal-title"style={text-align:center}>Doctor Details</h4>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  
+Name:
+    <input type="text"  value="{{doctor.username}}" readonly required class="form-control">
+    <br>
+Email:
+<input type="text" value="{{doctor.email}}" readonly required class="form-control">
+<br>
+specialist:
+    <input type="text"  value="{{doctor.specialist}}" readonly required class="form-control">
+          <br>
+
+ 
+
+</div>
     <div class="modal-footer">
     <button type="button" class="btn btn-primary" (click)="update()">Edit</button>
     <button type="button" class="btn btn-danger" (click)="delete()">Delete</button>

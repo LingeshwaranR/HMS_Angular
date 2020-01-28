@@ -1,30 +1,65 @@
 <div class="modal-header">
-    <h4 class="modal-title"style={text-align:center}>Update Doctor</h4>
-    <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
-  <div class="modal-body">
-    Id:
-    <input type="number" name="Id" [(ngModel)]="doctor.pkUserId" required class="form-control">
+  <h4 class="modal-title"style={text-align:center}>Update Doctor</h4>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body" [formGroup]="DoctorForm">
+  Id:
+    <input type="number"  formControlName="pkUserId" readonly  required class="form-control">
     <br>
     Name:
-    <input type="text" name="name"  [(ngModel)]="doctor.username" required class="form-control">
-    <br>
-    Email:
-    <input type="text" name="email"  [(ngModel)]="doctor.email" required class="form-control">
-    <br>
-     Password:
-    <input type="password" name="password"  [(ngModel)]="doctor.password" required class="form-control">
-    <br>
-     specialist:
-    <input type="text" name="specialist" [(ngModel)]="doctor.specialist" required class="form-control">
-    <br>
+    <input type="text"  formControlName="username" required class="form-control" 
+    [ngClass]="{ 'is-invalid': submitted && f.username.errors }">
+    <div *ngIf="submitted && f.username.errors" class="invalid-feedback">
+      <div *ngIf="f.username.errors.required"> Name is required</div>
+   <div *ngIf="f.username.errors.maxlength">
+      Name cannot be more than 12 characters long.
+   </div>
+   <div *ngIf="f.username.errors.minlength">
+      Name must be at least 2 characters long.
+   </div>
   </div>
-  <div class="modal-footer">
-    <button type="button" class="btn btn-outline-primary" (click)="update(doctor)">Update</button>
- <button type="button" class="btn btn-outline-dark" (click)="activeModal.close('Close click')">Close</button>
- <div *ngIf="updateStatus" class="alert alert-success alert-dismissible fade show" role="alert">Update Success!<button type="button" (click)="updateStatus=false;"class="close" data-dismiss="alert" aria-label="Close">
-  <span aria-hidden="true">&times;</span>
-</button></div>
+    <br>
+Email:
+<input type="text"  formControlName="email" required class="form-control"
+[ngClass]="{ 'is-invalid': submitted && f.email.errors }">
+<div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+<div *ngIf="f.email.errors.required">
+  Email is required.
+</div>
+<div *ngIf="f.email.errors.email">
+  Email Must be Valid.
+</div>
+<div *ngIf="f.email.errors.emailDomain">
+Email Domain Must be Valid.
+</div>
+
+</div>
+<br>
+
+Password:
+<input type="password"  formControlName="password" required class="form-control"
+[ngClass]="{ 'is-invalid': submitted && f.password.errors }">
+<br>
+<div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+  <div *ngIf="f.password.errors.required">Password is required</div>
+  <div *ngIf="f.password.errors.minlength">Password must be at least 6 characters</div>
+</div>
+  
+    specialist:
+    <input type="text"  formControlName="specialist" required class="form-control"
+    [ngClass]="{ 'is-invalid': submitted && f.specialist.errors }">
+    <div *ngIf="submitted && f.specialist.errors" class="invalid-feedback">
+      <div *ngIf="f.specialist.errors.required">Specialist is required</div>
+  
   </div>
+          <br>
+
+ 
+</div>
+<div class="modal-footer">
+
+  <button type="button" class="btn btn-outline-primary" (click)="update()">Submit</button>
+
+</div>

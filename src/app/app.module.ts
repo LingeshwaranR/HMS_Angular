@@ -14,7 +14,7 @@ import { PatientComponent } from './components/patient/patient.component';
 import {HttpClientModule,HTTP_INTERCEPTORS,HttpHeaders} from '@angular/common/http';
 import { DoctorModalComponent } from './components/doctor-modal/doctor-modal.component';
 import { DoctorUpdateModalComponent } from './components/doctor-update-modal/doctor-update-modal.component';
-
+import { ReactiveFormsModule } from '@angular/forms';
 @NgModule({
   declarations: [
     AppComponent,
@@ -32,7 +32,8 @@ import { DoctorUpdateModalComponent } from './components/doctor-update-modal/doc
     AppRoutingModule,
     FormsModule,
     NgbModule,
-    HttpClientModule
+    HttpClientModule,
+    ReactiveFormsModule
 
   ],
   providers: [UserService],

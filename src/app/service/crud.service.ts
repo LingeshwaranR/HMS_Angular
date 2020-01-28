@@ -7,6 +7,7 @@ import { Doctor } from '../model/doctor';
   providedIn: 'root'
 })
 export class CrudService {
+  //Split to doc and patients
   private url = "http://localhost:8080";
   private title = "Patients Profiles";
   // httpOptions={
