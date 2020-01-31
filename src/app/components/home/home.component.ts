@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -9,16 +10,16 @@ export class HomeComponent implements OnInit {
 
 patient:boolean=false;
 doctor:boolean=false;
-  constructor() { }
+  constructor(private route : ActivatedRoute, private router:Router) { }
 
   ngOnInit() {
   }
 displayPatient(){
-  this.doctor = false
-this.patient=true;
+  this.router.navigate(['patient'],{relativeTo:this.route});
+
 }
 displayDoctor(){
-  this.patient = false;
-this.doctor=true;
+  this.router.navigate(['doctor'],{relativeTo:this.route});
+
 }
 }
