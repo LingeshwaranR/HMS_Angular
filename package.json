@@ -25,7 +25,7 @@
     "@ng-bootstrap/ng-bootstrap": "^5.2.1",
     "bootstrap": "^4.4.1",
     "express": "^4.17.1",
-    "express-jwt": "^5.3.1",
+    "express-jwt": "^6.0.0",
     "jquery": "^3.4.1",
     "jwks-rsa": "^1.6.2",
     "npm-run-all": "^4.1.5",
